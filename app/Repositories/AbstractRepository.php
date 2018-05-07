@@ -25,4 +25,26 @@ abstract class AbstractRepository
     {
         return $this->model->where($field, $value)->count();
     }
+    
+    public function create(array $data)
+    {
+        return $this->model->create($data);
+    }
+
+    public function updateCustom(array $data, $id, $attribute = "id")
+    {
+        return $this->model->where($attribute, '=', $id)->update($data);
+    }
+
+    public function update(array $data, $id)
+    {
+        $instance = $this->model->find($id);
+        $instance->fill($data);
+        return $instance->save();
+    }
+
+    public function delete($id)
+    {
+        return $this->model->destroy($id);
+    }
 }
